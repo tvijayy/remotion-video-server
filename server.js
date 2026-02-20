@@ -82,8 +82,8 @@ app.post('/render', async (req, res) => {
   outputLocation: outputPath,
   inputProps: { videoUrl, caption, scriptText },
   chromiumOptions: {
-    executablePath: '/usr/bin/chromium', // Use system Chromium
-  },
+  executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
+},,
   onProgress: ({ progress }) => {
     console.log(`Render progress: ${Math.round(progress * 100)}%`);
   },
