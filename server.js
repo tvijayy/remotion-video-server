@@ -76,19 +76,18 @@ app.post('/render', async (req, res) => {
     // Render the video
     console.log('Rendering video...');
     await renderMedia({
-      composition,
-      serveUrl: bundleLocation,
-      codec: 'h264',
-      outputLocation: outputPath,
-      inputProps: {
-        videoUrl,
-        caption,
-        scriptText: scriptText || caption,
-      },
-      onProgress: ({ progress }) => {
-        console.log(`Render progress: ${Math.round(progress * 100)}%`);
-      },
-    });
+  composition,
+  serveUrl: bundleLocation,
+  codec: 'h264',
+  outputLocation: outputPath,
+  inputProps: { videoUrl, caption, scriptText },
+  chromiumOptions: {
+    executablePath: '/usr/bin/chromium', // Use system Chromium
+  },
+  onProgress: ({ progress }) => {
+    console.log(`Render progress: ${Math.round(progress * 100)}%`);
+  },
+});
 
     console.log('Video rendered successfully at:', outputPath);
 
